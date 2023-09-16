@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var request = new XMLHttpRequest();
+       //open a connection
+       request.open('GET','https://restcountries.com/v3.1/all');
+
+       //send a connection
+       request.send();
+
+       //page load
+       request.onload = function(){
+        var data =JSON.parse(request.response)
+        var countries = data.filter(index=>index.region == 'Asia') 
+        console.log(countries);
+        var pop = data.filter(index=>index.population<200000) 
+        console.log(pop);
+        var totpop = data.reduce((acc,element)=>acc+element.population,0)
+        console.log(totpop);
+        data.forEach(element => {
+             console.log(element.name);
+             console.log(element.flag);
+             console.log(element.capital);
+        });
+        //Print the country which uses US Dollars as currency
+        const datas = data.filter((item) => item?.currencies?.USD).map((value) => value.name);
+        console.log(datas);
+        }
+    </script>
+</body>
+</html>
